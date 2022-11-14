@@ -24,3 +24,7 @@
 # To delete a single appointment = ('appointment/delete/'
 # To view a single appointment = ('appointment/view/'
 ```
+
+## Generate API Documents:
+
+[drf-spectacular](https://github.com/tfranzel/drf-spectacular/#installation)
