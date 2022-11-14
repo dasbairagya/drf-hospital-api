@@ -12,11 +12,7 @@ class UserManager(BaseUserManager):
         user_email = self.normalize_email(user_email)
         is_staff = kwargs.pop('is_staff', False)
         is_superuser = kwargs.pop('is_superuser', False)
-        user = self.model(
-                user_email=user_email, 
-                is_active=True, 
-                is_staff=is_staff, 
-                **kwargs)
+        user = self.model(user_email=user_email, is_active=True, is_staff=is_staff, **kwargs)
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -26,8 +22,7 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, user_email, password, **extra_fields):
         print(f"{user_email=} {password=} {extra_fields=}")
-        return self._create_user(user_email=user_email, password=password, is_staff=True, is_superuser=True, **extra_fields)
-
+        return self._create_user(user_email, password, is_staff=True, is_superuser=True, **extra_fields)
 
 
 class RegisterUser(AbstractBaseUser, PermissionsMixin):
