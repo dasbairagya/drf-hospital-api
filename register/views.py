@@ -2,11 +2,13 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework.views import APIView
 from .serializers import UserSerializer
+from .models import RegisterUser
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 # Create your views here.
 class RegisterView(APIView):
 
-    permission_classes = []
+    permission_classes = [AllowAny]
 
     def post(self, request, format=None):
         serializer = UserSerializer(data=request.data)
