@@ -3,9 +3,20 @@
 ## Register Endpoints:
 ```
 # To register the user = 'register/'
+sample data:
+{
+    "user_name": "gopal",
+    "user_email": "gopal@gmail.com",
+    "password": "gopal@123",
+    "user_dob": "2022-11-15",
+    "location": "kokata",
+    "user_mobile": "8509848755"
+}
+
 # To signin the user = 'signin/'
 # To edit all user = 'editprofile/'
 # To view a single user = 'viewprofile/'
+
 ```
 
 ## Patients Endpoints:
