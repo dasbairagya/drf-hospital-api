@@ -39,3 +39,14 @@ sample data:
 ## Generate API Documents:
 
 [drf-spectacular](https://github.com/tfranzel/drf-spectacular/#installation)
+
+## Authentication
+[source](https://python.plainenglish.io/django-custom-user-model-and-auth-using-jwt-simple-boilerplate-6acd78bf7767)
+
+[Pkg: Simple JWT](https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html)
+
+## Create super user:
+```
+python manage.py createsuperuser
+
+```

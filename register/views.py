@@ -1,3 +1,4 @@
+from django.contrib.auth import login, authenticate
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -5,9 +6,11 @@ from .serializers import UserSerializer
 from .models import RegisterUser
 from rest_framework.permissions import AllowAny
 
-
 # https://python.plainenglish.io/django-custom-user-model-and-auth-using-jwt-simple-boilerplate-6acd78bf7767
 # Create your views here.
+from .util import get_tokens_for_user
+
+
 class RegisterView(APIView):
     permission_classes = [AllowAny]
 
@@ -22,3 +25,19 @@ class RegisterView(APIView):
         users = RegisterUser.objects.all()
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
+
+
+class LoginView(APIView):
+    permission_classes = [AllowAny]  # To avoid msg:  Authentication credentials were not provided
+
+    def post(self, request):
+        if 'user_email' not in request.data or 'password' not in request.data:
+            return Response({'msg': 'Credentials missing'}, status=status.HTTP_400_BAD_REQUEST)
+        user_email = request.POST['user_email']
+        password = request.POST['password']
+        user = authenticate(request, user_email=user_email, password=password)
+        if user is not None:
+            login(request, user)
+            auth_data = get_tokens_for_user(request.user)
+            return Response({'msg': 'Login Success', **auth_data}, status=status.HTTP_200_OK)
+        return Response({'msg': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
