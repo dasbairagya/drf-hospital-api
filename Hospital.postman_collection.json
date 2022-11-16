@@ -1,0 +1,92 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Hospital",
+		"_postman_id": "1f0f7784-1794-7e84-a45d-4d5069017560",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://127.0.0.1:8000/register/",
+			"request": {
+				"url": "http://127.0.0.1:8000/register/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_name\": \"gopal\",\r\n    \"user_email\": \"gopal@gmail.com\",\r\n    \"password\": \"gopal@123\",\r\n    \"user_dob\": \"2022-11-15\",\r\n    \"location\": \"kokata\",\r\n    \"user_mobile\": \"8509848755\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8000/api/token/",
+			"request": {
+				"url": "http://127.0.0.1:8000/api/token/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user_email\": \"admin@gmail.com\",\r\n  \"password\": \"admin@123\"\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8000/signin/",
+			"request": {
+				"url": "http://127.0.0.1:8000/signin/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"description": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "user_email",
+							"value": "gopal@gmail.com",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "gopal@123",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "gopal",
+							"description": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
