@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 # from django.utils.translation import ugettext_lazy as _  
@@ -37,6 +39,7 @@ class RegisterUser(AbstractBaseUser, PermissionsMixin):
     def natural_key(self):
         return self.user_email,
 
+    # id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     user_name = models.CharField(max_length=150)
     user_email = models.EmailField(max_length=255, unique=True)
     user_dob = models.DateTimeField(default=timezone.now)

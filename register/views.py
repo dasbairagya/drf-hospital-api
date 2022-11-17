@@ -2,7 +2,7 @@ from django.contrib.auth import login, authenticate
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import UserSerializer, ProfileSerializer
+from .serializers import ProfileSerializer, RegisterUserSerializer
 from .models import RegisterUser
 from rest_framework.permissions import AllowAny
 
@@ -15,7 +15,7 @@ class RegisterView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        serializer = UserSerializer(data=request.data)
+        serializer = RegisterUserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -23,7 +23,7 @@ class RegisterView(APIView):
 
     def get(self, request):
         users = RegisterUser.objects.all()
-        serializer = UserSerializer(users, many=True)
+        serializer = RegisterUserSerializer(users, many=True)
         return Response(serializer.data)
 
 

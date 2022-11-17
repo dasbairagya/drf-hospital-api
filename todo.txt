@@ -1,0 +1,56 @@
+----------------------------------------------------------------
+appointments:
+----------------------------------------------------------------
+# Endpoints:
+# To register the appointment = 'appointment/register/'
+# To edit a single appointment = 'appointment/edit/'
+# To list all appointments = 'appointment/list/'
+# To delete a single appointment = ('appointment/delete/'
+# To view a single appointment = ('appointment/view/'
+
+#Fields:
+{
+"patients":1, 
+"disease": "Fever",
+"date": "2019-11-12",
+"timings":"12.00-1.00",
+"description":"Severe pain"
+}
+
+----------------------------------------------------------------
+patients:
+----------------------------------------------------------------
+# Endpoints:
+# To register the patient = 'patients/register/'
+# To edit a single patients = 'patients/edit/'
+# To list all patients = 'patients/list/'
+# To view a single patients = ('patients/view/'
+
+#Fields:
+{"user_name":"patient1",
+ "user_email":"patient1@test.com",
+ "password":"password", 
+ "user_dob":"2015:12-14",
+ "location":"chennai",
+ "user_mobile":"8509848755",
+ "bookappointments":[]
+}
+
+----------------------------------------------------------------
+register:
+----------------------------------------------------------------
+# Endpoints:
+# To register the user = 'register/'
+# To signin the user = 'signin/'
+# To edit all user = 'editprofile/'
+# To view a single user = 'viewprofile/'
+
+#Fields:
+{"user_name":"patient1",
+ "user_email":"patient1@test.com",
+ "password":"password", 
+ "user_dob":"2015:12-14",
+ "location":"chennai",
+ "user_mobile":"8509848755",
+
+}

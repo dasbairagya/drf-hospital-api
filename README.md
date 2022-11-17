@@ -87,11 +87,94 @@ response:
 ```
 
 #### Patients Endpoints:
+
+##### Register : 'patients/register/'
 ```
-# To register the patient = 'patients/register/'
-# To edit a single patients = 'patients/edit/'
-# To list all patients = 'patients/list/'
-# To view a single patients = ('patients/view/'
+request: post
+{
+    "user_name": "patient1",
+    "user_email": "patient1@gmail.com",
+    "password": "password",
+    "user_dob": "2022-11-15",
+    "location": "chennai",
+    "user_mobile": "8509848751"
+}
+
+response:
+{
+    "user_data": {
+        "id": 2,
+        "password": "pbkdf2_sha256$390000$IUxZIeOi8hthHyj9pP8I2n$qthIIL0c/o3Y8SehSb0sGGkO3SlhpC1Ko5V/O4pQ7bc=",
+        "last_login": null,
+        "is_superuser": false,
+        "user_name": "patient1",
+        "user_email": "patient1@gmail.com",
+        "user_dob": "2022-11-15T00:00:00Z",
+        "location": "chennai",
+        "user_mobile": "8509848751",
+        "is_staff": false,
+        "is_active": true,
+        "groups": [
+            1
+        ],
+        "user_permissions": []
+    },
+    "profile_data": {
+        "user_dob": "2022-11-15T00:00:00Z",
+        "location": "chennai",
+        "user_mobile": "8509848751"
+    }
+}
+
+```
+##### Edit : 'patients/edit/<id>'
+```
+request: get
+
+response:
+{
+    "profile_data": {
+        "user_dob": "2022-11-15",
+        "location": "chennai",
+        "user_mobile": "8509848752"
+    }
+}
+----------------------------------------------------------
+
+request: put
+{
+    "profile_data":{
+        "user_dob": "2022-11-16",
+        "location": "kolkata",
+        "user_mobile": "8509848752"
+    }
+}
+response:
+{
+    "profile_data":{
+        "user_dob": "2022-11-16",
+        "location": "kolata",
+        "user_mobile": "8509848752"
+    }
+}
+
+
+
+```
+##### List : 'patients/list/'
+```
+request: post
+
+response:
+
+```
+##### View : 'patients/view/'
+
+```
+request: post
+
+response:
+
 ```
 
 #### Appointments Endpoints:

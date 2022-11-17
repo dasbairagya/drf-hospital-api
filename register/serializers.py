@@ -3,7 +3,7 @@ from rest_framework import serializers
 from .models import RegisterUser
 
 
-class UserSerializer(serializers.ModelSerializer):
+class RegisterUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = RegisterUser
         fields = '__all__'
