@@ -359,8 +359,9 @@ response:
 
 [Pkg: Simple JWT](https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html)
 
-#### Create super user:
+#### Migration and super user creation:
 ```
-python manage.py createsuperuser
-
+> python manage.py makemigrations
+> python manage.py migrate
+> python manage.py createsuperuser
 ```
