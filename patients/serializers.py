@@ -40,6 +40,7 @@ class PatientRegistrationSerializer(serializers.ModelSerializer):
 
 class PatientProfileSerializer(serializers.Serializer):
 
+
     user_dob = serializers.DateTimeField()
     location = serializers.CharField(max_length=50)
     user_mobile = serializers.CharField(max_length=50)
@@ -64,3 +65,9 @@ class PatientProfileSerializer(serializers.Serializer):
         instance.user_mobile = validated_data.get('user_mobile', instance.user_mobile)
         instance.save()
         return instance
+
+class PatientDetailSerializer(serializers.Serializer): #get list of patients
+    id=serializers.UUIDField(read_only=True)
+    user_name=serializers.CharField(label='Username:', read_only=True)
+    user_email=serializers.CharField(label='Last name:', required=False)
+    patient=PatientProfileSerializer(label='User')

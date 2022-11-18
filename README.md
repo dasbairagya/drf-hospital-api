@@ -1,6 +1,7 @@
 # drf-hospital-api
 
 ![](./endpoints.png)
+![](./endpoints1.png)
 
 #### Register Endpoints: 'register/'
 ```
@@ -127,7 +128,7 @@ response:
 }
 
 ```
-##### Edit : 'patients/edit/<id>'
+##### Edit : 'patients/edit/\<id\>'
 ```
 request: get
 
@@ -163,17 +164,63 @@ response:
 ```
 ##### List : 'patients/list/'
 ```
-request: post
+request: get
 
 response:
+{
+    "patients": [
+        {
+            "id": "2",
+            "user_name": "patient1",
+            "user_email": "patient1@gmail.com",
+            "patient": {
+                "user_dob": "2022-11-15T00:00:00Z",
+                "location": "chennai",
+                "user_mobile": "8509848751"
+            }
+        },
+        {
+            "id": "3",
+            "user_name": "patient2",
+            "user_email": "patient2@gmail.com",
+            "patient": {
+                "user_dob": "2022-11-15T00:00:00Z",
+                "location": "chennai",
+                "user_mobile": "8509848751"
+            }
+        },
+        {
+            "id": "4",
+            "user_name": "patient3",
+            "user_email": "patient3@gmail.com",
+            "patient": {
+                "user_dob": "2022-11-15T00:00:00Z",
+                "location": "mumbai",
+                "user_mobile": "8509848751"
+            }
+        }
+    ]
+}
 
 ```
-##### View : 'patients/view/'
+##### View : 'patients/view/\<id\>'
 
 ```
-request: post
+request: get
 
 response:
+{
+    "patient_data": {
+        "id": "3",
+        "user_name": "patient2",
+        "user_email": "patient2@gmail.com",
+        "patient": {
+            "user_dob": "2022-11-15T00:00:00Z",
+            "location": "chennai",
+            "user_mobile": "8509848751"
+        }
+    }
+}
 
 ```
 

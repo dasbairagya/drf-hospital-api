@@ -4,8 +4,7 @@ from rest_framework.views import APIView
 from register.models import RegisterUser
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from patients.serializers import PatientRegistrationSerializer, PatientProfileSerializer
-
+from patients.serializers import PatientRegistrationSerializer, PatientProfileSerializer, PatientDetailSerializer
 
 
 # Create your views here.
@@ -33,9 +32,8 @@ class PatientRegistrationView(APIView):
                 'profile_data': profileSerializer.data
             }, status=status.HTTP_400_BAD_REQUEST)
 
-
 class PatientProfileView(APIView):
-    """"API endpoint for Patient profile view/edit/update"""
+    """"API endpoint for Patient profile view"""
 
     permission_classes = [AllowAny]
 
@@ -48,11 +46,29 @@ class PatientProfileView(APIView):
     def get(self, request, pk=None, format=None):
         if pk:
             patient_detail = self.get_object(pk)
-            serializer = PatientProfileSerializer(patient_detail)
-            return Response({'profile_data': serializer.data}, status=status.HTTP_200_OK) #view single patient
-        all_patient = RegisterUser.objects.filter(groups=2, status=True)
-        serializer = PatientProfileSerializer(all_patient, many=True)
-        return Response({'patient': serializer.data}, status=status.HTTP_200_OK) #view all patient
+            serializer = PatientDetailSerializer(patient_detail)
+            return Response({'patient_data': serializer.data}, status=status.HTTP_200_OK) #view single patient
+
+class PatientProfileListView(APIView):
+    """"API endpoint for all patients"""
+
+    permission_classes = [AllowAny]
+
+    def get(self, request, pk=None, format=None):
+        all_patient = RegisterUser.objects.filter(groups=1)
+        serializer = PatientDetailSerializer(all_patient, many=True)
+        return Response({'patients': serializer.data}, status=status.HTTP_200_OK) #view all patient
+
+class PatientProfileEditView(APIView):
+    """"API endpoint for Patient profile edit"""
+
+    permission_classes = [AllowAny]
+
+    def get_object(self, pk):
+        try:
+            return RegisterUser.objects.get(pk=pk)
+        except RegisterUser.DoesNotExist:
+            raise Http404
 
     def put(self, request, pk):
         profile = self.get_object(pk)
@@ -64,6 +80,17 @@ class PatientProfileView(APIView):
         return Response({
             'profile_data': serializer.errors
         }, status=status.HTTP_400_BAD_REQUEST)
+
+class PatientProfileDeleteView(APIView):
+    """"API endpoint for Patient profile delete"""
+
+    permission_classes = [AllowAny]
+
+    def get_object(self, pk):
+        try:
+            return RegisterUser.objects.get(pk=pk)
+        except RegisterUser.DoesNotExist:
+            raise Http404
 
     def delete(self, request, pk):
         saved_user = self.get_object(pk)
