@@ -320,8 +320,8 @@ request: PUT <- id=1
 "appointment":{
     "disease": "Fever",
     "date": "2019-11-20",
-    "timings":"02:00–03:00",
-    "description":"Severe pain"
+    "timings":"04:00–05:00",
+    "description":"Severe Pain"
     }
 }
 
@@ -334,7 +334,7 @@ response:
         "disease": "Fever",
         "date": "2019-11-20",
         "timings": "02:00–03:00",
-        "description": "Severe pain"
+        "description": "Severe Pain"
     }
 }
 
