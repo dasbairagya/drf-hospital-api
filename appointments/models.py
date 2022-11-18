@@ -28,7 +28,7 @@ class Appointment(models.Model):
         (SLOT9, SLOT9),
     ]
 
-    patient = models.ForeignKey(Patient, related_name='patient_appointments', on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     disease = models.CharField(max_length=50)
     date = models.DateField(verbose_name="Appointment date", auto_now=False, auto_now_add=False)
     timings = models.CharField(verbose_name="Appointement time", max_length=20,  choices=TIMESLOT_LIST, default=SLOT1)

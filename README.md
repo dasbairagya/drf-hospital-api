@@ -212,14 +212,32 @@ response:
 {
     "patient_data": {
         "id": "3",
-        "user_name": "patient2",
-        "user_email": "patient2@gmail.com",
+        "user_name": "patient3",
+        "user_email": "patient3@gmail.com",
         "patient": {
             "user_dob": "2022-11-15T00:00:00Z",
-            "location": "chennai",
+            "location": "mumbai",
             "user_mobile": "8509848751"
         }
-    }
+    },
+    "bookappointments": [
+        {
+            "id": 1,
+            "patient": 3,
+            "disease": "Fever",
+            "date": "2019-11-20",
+            "timings": "02:00–03:00",
+            "description": "Severe pain"
+        },
+        {
+            "id": 3,
+            "patient": 3,
+            "disease": "Pain",
+            "date": "2019-11-20",
+            "timings": "04:00–05:00",
+            "description": "Severe tooth pain"
+        }
+    ]
 }
 
 ```
@@ -282,6 +300,16 @@ response:
 request: GET
 
 response:
+{
+    "appointments": {
+        "id": 1,
+        "patient": 3,
+        "disease": "Fever",
+        "date": "2019-11-20",
+        "timings": "02:00–03:00",
+        "description": "Severe pain"
+    }
+}
 
 ```
 ##### Appointments : 'appointment/edit/\<id\>'

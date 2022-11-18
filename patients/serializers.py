@@ -1,4 +1,7 @@
 from rest_framework import serializers
+
+from appointments.models import Appointment
+from appointments.serializers import AppointmentSerializer
 from .models import RegisterUser, Patient
 from django.contrib.auth.models import Group
 
@@ -68,6 +71,6 @@ class PatientProfileSerializer(serializers.Serializer):
 
 class PatientDetailSerializer(serializers.Serializer): #get list of patients
     id=serializers.UUIDField(read_only=True)
-    user_name=serializers.CharField(label='Username:', read_only=True)
-    user_email=serializers.CharField(label='Last name:', required=False)
-    patient=PatientProfileSerializer(label='User')
+    user_name=serializers.CharField(label='user_name:', read_only=True)
+    user_email=serializers.CharField(label='user_email:', required=False)
+    patient=PatientProfileSerializer(label='patient')
