@@ -2,10 +2,11 @@
 
 ![](./endpoints.png)
 ![](./endpoints1.png)
+![](./endpoints2.png)
 
 #### Register Endpoints: 'register/'
 ```
-request: post
+request: POST
 {
     "user_name": "gopal",
     "user_email": "gopal@gmail.com",
@@ -34,7 +35,7 @@ response:
 ```
 #### Login endpoint: 'signin/'
 ````
-request: post
+request: POST
 {
     "user_email":"gopal@gmail.com",
     "password":"gopal@123"
@@ -50,7 +51,7 @@ response:
 
 #### Edit Profile Endpoint: 'editprofile/'
 ```
-request: put
+request: PUT
 {
     "user_email":"gopal@gmail.com",
      "profile_data": {
@@ -71,7 +72,7 @@ response:
 ```
 #### View Profile Endpoint: 'viewprofile/'
 ```
-request: get
+request: GET
 {
     "user_email":"gopal@gmail.com"
 }
@@ -91,7 +92,7 @@ response:
 
 ##### Register : 'patients/register/'
 ```
-request: post
+request: POST
 {
     "user_name": "patient1",
     "user_email": "patient1@gmail.com",
@@ -130,7 +131,7 @@ response:
 ```
 ##### Edit : 'patients/edit/\<id\>'
 ```
-request: get
+request: GET
 
 response:
 {
@@ -140,9 +141,8 @@ response:
         "user_mobile": "8509848752"
     }
 }
-----------------------------------------------------------
 
-request: put
+request: PUT
 {
     "profile_data":{
         "user_dob": "2022-11-16",
@@ -164,7 +164,7 @@ response:
 ```
 ##### List : 'patients/list/'
 ```
-request: get
+request: GET
 
 response:
 {
@@ -206,7 +206,7 @@ response:
 ##### View : 'patients/view/\<id\>'
 
 ```
-request: get
+request: GET
 
 response:
 {
@@ -225,12 +225,101 @@ response:
 ```
 
 #### Appointments Endpoints:
+
+##### Appointments : 'appointment/register/'
 ```
-# To register the appointment = 'appointment/register/'
-# To edit a single appointment = 'appointment/edit/'
-# To list all appointments = 'appointment/list/'
-# To delete a single appointment = ('appointment/delete/'
-# To view a single appointment = ('appointment/view/'
+request: POST
+{
+"patient":2, 
+"disease": "Fever",
+"date": "2019-11-12",
+"timings":"12.00-1.00",
+"description":"Severe pain"
+}
+
+response:
+{
+    "appointments": {
+        "id": 1,
+        "patient": 2,
+        "disease": "Fever",
+        "date": "2019-11-12",
+        "timings": "12.00-1.00",
+        "description": "Severe pain"
+    }
+}
+
+```
+##### Appointments : 'appointment/list/'
+```
+request: GET
+
+response:
+{
+    "appointments": [
+        {
+            "id": 1,
+            "patient": 2,
+            "disease": "Fever",
+            "date": "2019-11-12",
+            "timings": null,
+            "description": "Severe pain"
+        },
+        {
+            "id": 2,
+            "patient": 3,
+            "disease": "Fever",
+            "date": "2019-11-12",
+            "timings": null,
+            "description": "Severe pain"
+        }
+    ]
+}
+
+```
+##### Appointments : 'appointment/view/\<id\>'
+```
+request: GET
+
+response:
+
+```
+##### Appointments : 'appointment/edit/\<id\>'
+```
+request: PUT <- id=1
+
+{
+"appointment":{
+    "disease": "Fever",
+    "date": "2019-11-20",
+    "timings":"02:00–03:00",
+    "description":"Severe pain"
+    }
+}
+
+response:
+
+{
+    "appointment": {
+        "id": 1,
+        "patient": 3,
+        "disease": "Fever",
+        "date": "2019-11-20",
+        "timings": "02:00–03:00",
+        "description": "Severe pain"
+    }
+}
+
+```
+##### Appointments : 'appointment/delete/\<id\>'
+```
+request: DELETE <- id=2
+
+response:
+{
+    "message": "Appointment with id `2` has been deleted."
+}
+
 ```
 
 #### Generate API Documents:

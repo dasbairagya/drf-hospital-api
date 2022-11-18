@@ -1,92 +1,524 @@
 {
-	"variables": [],
 	"info": {
+		"_postman_id": "3f701c1c-c176-4225-87e3-9505b02e269a",
 		"name": "Hospital",
-		"_postman_id": "1f0f7784-1794-7e84-a45d-4d5069017560",
-		"description": "",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1454634"
 	},
 	"item": [
 		{
-			"name": "http://127.0.0.1:8000/register/",
-			"request": {
-				"url": "http://127.0.0.1:8000/register/",
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"user_name\": \"gopal\",\r\n    \"user_email\": \"gopal@gmail.com\",\r\n    \"password\": \"gopal@123\",\r\n    \"user_dob\": \"2022-11-15\",\r\n    \"location\": \"kokata\",\r\n    \"user_mobile\": \"8509848755\"\r\n}"
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "http://127.0.0.1:8000/api/token/",
-			"request": {
-				"url": "http://127.0.0.1:8000/api/token/",
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"user_email\": \"admin@gmail.com\",\r\n  \"password\": \"admin@123\"\r\n}"
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "http://127.0.0.1:8000/signin/",
-			"request": {
-				"url": "http://127.0.0.1:8000/signin/",
-				"method": "POST",
-				"header": [
-					{
-						"key": "",
-						"value": "",
-						"description": "",
-						"disabled": true
-					}
-				],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "user_email",
-							"value": "gopal@gmail.com",
-							"description": "",
-							"type": "text"
+			"name": "Patients",
+			"item": [
+				{
+					"name": "http://127.0.0.1:8000/patients/register/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_name\": \"patient3\",\r\n    \"user_email\": \"patient3@gmail.com\",\r\n    \"password\": \"12345\",\r\n    \"user_dob\": \"2022-11-15\",\r\n    \"location\": \"mumbai\",\r\n    \"user_mobile\": \"8509848751\"\r\n}"
 						},
-						{
-							"key": "password",
-							"value": "gopal@123",
-							"description": "",
-							"type": "text"
-						},
-						{
-							"key": "username",
-							"value": "gopal",
-							"description": "",
-							"type": "text",
-							"disabled": true
+						"url": {
+							"raw": "http://127.0.0.1:8000/patients/register/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"patients",
+								"register",
+								""
+							]
 						}
-					]
+					},
+					"response": []
 				},
-				"description": ""
-			},
-			"response": []
+				{
+					"name": "http://127.0.0.1:8000/patients/edit/<id>",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"profile_data\":{\r\n        \"user_dob\": \"2022-11-16\",\r\n        \"location\": \"chennai\",\r\n        \"user_mobile\": \"8509848752\"\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/patients/edit/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"patients",
+								"edit",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://127.0.0.1:8000/patients/view/<id>",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"profile_data\":{\r\n        \"user_dob\": \"2022-11-16\",\r\n        \"location\": \"chennai\",\r\n        \"user_mobile\": \"8509848752\"\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/patients/view/3",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"patients",
+								"view",
+								"3"
+							]
+						},
+						"description": "get method"
+					},
+					"response": []
+				},
+				{
+					"name": "http://127.0.0.1:8000/patients/list",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/patients/list",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"patients",
+								"list"
+							]
+						},
+						"description": "get method"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RegisterLoginProfile",
+			"item": [
+				{
+					"name": "http://127.0.0.1:8000/register/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_name\": \"gopal\",\r\n    \"user_email\": \"gopal@gmail.com\",\r\n    \"password\": \"gopal@123\",\r\n    \"user_dob\": \"2022-11-15\",\r\n    \"location\": \"kokata\",\r\n    \"user_mobile\": \"8509848755\"\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/register/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"register",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://127.0.0.1:8000/signin/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user_email",
+									"value": "gopal@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "gopal@123",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "gopal",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/signin/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"signin",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://127.0.0.1:8000/editprofile/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_email\":\"gopal@gmail.com\",\r\n     \"profile_data\": {\r\n        \"user_dob\": \"2022-11-15T00:00:00Z\",\r\n        \"location\": \"Kolkata\",\r\n        \"user_mobile\": \"8509848755\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/editprofile/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"editprofile",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://127.0.0.1:8000/viewprofile/",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_email\":\"gopal@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/viewprofile/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"viewprofile",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Token",
+			"item": [
+				{
+					"name": "http://127.0.0.1:8000/api/token/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user_email\": \"admin@gmail.com\",\r\n  \"password\": \"admin@123\"\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/token/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"token",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Appointments",
+			"item": [
+				{
+					"name": "http://127.0.0.1:8000/appointment/register/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"patient\":2, \r\n\"disease\": \"Fever\",\r\n\"date\": \"2019-11-12\",\r\n\"timings\":\"12.00-1.00\",\r\n\"description\":\"Severe pain\"\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/appointment/register/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"appointment",
+								"register",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://127.0.0.1:8000/appointment/list",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/appointment/list",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"appointment",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://127.0.0.1:8000/appointment/edit/<id>",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"appointment\":{\r\n    \"disease\": \"Fever\",\r\n    \"date\": \"2019-11-20\",\r\n    \"timings\":\"02:00–03:00\",\r\n    \"description\":\"Severe pain\"\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/appointment/edit/1/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"appointment",
+								"edit",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://127.0.0.1:8000/appointment/view/<id>",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/appointment/view/1/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"appointment",
+								"view",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://127.0.0.1:8000/appointment/delete/<id>",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/appointment/delete/2/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"appointment",
+								"delete",
+								"2",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
