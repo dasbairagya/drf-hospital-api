@@ -333,7 +333,7 @@ response:
         "patient": 3,
         "disease": "Fever",
         "date": "2019-11-20",
-        "timings": "02:00–03:00",
+        "timings": "04:00–05:00",
         "description": "Severe Pain"
     }
 }
