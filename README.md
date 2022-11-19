@@ -1,5 +1,12 @@
 # drf-hospital-api
 
+This is an appointment booking API's based on Django REST Framework. This API has three features - Register/login, Patient and Appointment . For authenticating user, Django REST Framework custom token authentication is used. API endpoints and sample request/response are given below.
+
+
+
+
+# Endpoints
+
 ![](./endpoints.png)
 ![](./endpoints1.png)
 ![](./endpoints2.png)
