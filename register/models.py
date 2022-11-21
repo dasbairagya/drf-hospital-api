@@ -42,7 +42,7 @@ class RegisterUser(AbstractBaseUser, PermissionsMixin):
     # id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     user_name = models.CharField(max_length=150)
     user_email = models.EmailField(max_length=255, unique=True)
-    user_dob = models.DateTimeField(default=timezone.now)
+    user_dob = models.DateField()
     location = models.CharField(max_length=50)
     user_mobile = models.CharField(max_length=50)
     is_staff = models.BooleanField(default=False)

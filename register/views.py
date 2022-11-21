@@ -1,17 +1,22 @@
 from django.contrib.auth import login, authenticate
-from rest_framework import status
+from django.contrib.auth.models import update_last_login
+from django.http import Http404
+from rest_framework import status, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import ProfileSerializer, RegisterUserSerializer
+from .serializers import ProfileSerializer, RegisterUserSerializer, LoginSerializers
 from .models import RegisterUser
 from rest_framework.permissions import AllowAny
+from rest_framework.authtoken.models import Token
+
 
 # https://python.plainenglish.io/django-custom-user-model-and-auth-using-jwt-simple-boilerplate-6acd78bf7767
 # Create your views here.
 from .util import get_tokens_for_user
 
 
-class RegisterView(APIView):
+# Method to register a new user
+class RegisterCreateView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -27,34 +32,39 @@ class RegisterView(APIView):
         return Response(serializer.data)
 
 
+# Method to check login credentials
 class LoginView(APIView):
-    permission_classes = [AllowAny]  # To avoid msg:  Authentication credentials were not provided
+    def post(self, request, *args, **kwargs):
+        serializer = LoginSerializers(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        update_last_login(None, user)
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({"status": status.HTTP_200_OK, "Token": token.key})
 
-    def post(self, request):
-        if 'user_email' not in request.data or 'password' not in request.data:
-            return Response({'msg': 'Credentials missing'}, status=status.HTTP_400_BAD_REQUEST)
-        user_email = request.data['user_email'] # if are you using form-data body then use request.POST['user_email']
-        password = request.data['password']
-        user = authenticate(request, user_email=user_email, password=password)
-        if user is not None:
-            login(request, user)
-            auth_data = get_tokens_for_user(request.user)
-            return Response({'msg': 'Login Success', **auth_data}, status=status.HTTP_200_OK)
-        return Response({'msg': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
-class ProfileView(APIView):
-    """"API endpoint for Patient profile view"""
-
+# Method to list a particular user
+class SingleUserView(APIView):
     permission_classes = [AllowAny]
 
-    def get(self, request):
-        user = request.data
-        profile = RegisterUser.objects.filter(user_email=user['user_email']).get()
-        profileSerializer = ProfileSerializer(profile)
-        return Response({
-            'profile_data':profileSerializer.data,
-        }, status=status.HTTP_200_OK)
+    def get_object(self, pk):
+        try:
+            return RegisterUser.objects.get(
+                id=pk)  # as our model does not have a specified id as a primary key hence pk=pk with id=pk
+        except RegisterUser.DoesNotExist:
+            raise Http404
 
+    def get(self, request, pk=None, format=None):
+        if pk:
+            user = self.get_object(pk)
+            # print(user)
+            serializer = RegisterUserSerializer(user)
+            return Response({
+                'response': serializer.data,
+            }, status=status.HTTP_200_OK)
+
+
+# Method to edit details of a particular user
 
 class EditProfileView(APIView):
     """"API endpoint for Patient profile update"""
@@ -74,4 +84,3 @@ class EditProfileView(APIView):
         return Response({
             'profile_data': profileSerializer.errors
         }, status=status.HTTP_400_BAD_REQUEST)
-

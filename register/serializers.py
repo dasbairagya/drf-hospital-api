@@ -1,8 +1,7 @@
-from time import timezone
 from rest_framework import serializers
 from .models import RegisterUser
 
-
+#Write the serializer for Registering the user
 class RegisterUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = RegisterUser
@@ -11,6 +10,39 @@ class RegisterUserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = RegisterUser.objects.create_user(**validated_data)
         return user
+
+# fields = ("user_name", "user_email", "password","user_dob","location", "user_mobile")
+
+
+
+#Write the serializer for Signin
+
+class LoginSerializers(serializers.Serializer):
+    user_email = serializers.CharField(max_length=255)
+    password = serializers.CharField(
+        trim_whitespace=False,
+        max_length=128,
+        write_only=True
+    )
+
+    def validate(self, data):
+        user_email = data.get('email')
+        password = data.get('password')
+
+        if user_email and password:
+            user = authenticate(request=self.context.get('request'),
+                                user_email=user_email, password=password)
+            if not user:
+                msg = 'Unable to log in with provided credentials.'
+                raise serializers.ValidationError(msg, code='authorization')
+        else:
+            msg = 'Must include "username" and "password".'
+            raise serializers.ValidationError(msg, code='authorization')
+
+        data['user'] = user
+        return data
+
+# fields = ("user_email", "password")
 
 
 class ProfileSerializer(serializers.Serializer):

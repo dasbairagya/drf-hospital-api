@@ -54,3 +54,37 @@ register:
  "user_mobile":"8509848755",
 
 }
+
+
+==============================================================
+
+appointment test:
+
+from .views import RegisterCreateView, EditUserView, ListUserView, DeleteUserView, SingleUserView
+
+register test:
+from .views import RegisterCreateView, SingleUserView
+from rest_framework import
+
+patient test:
+from .views import RegisterCreateView, EditUserView
+
+
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
+    'corsheaders',
+
+]
