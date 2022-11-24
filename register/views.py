@@ -34,23 +34,32 @@ class RegisterCreateView(APIView):
 
 # Method to check login credentials
 class LoginView(APIView):
-    def post(self, request, *args, **kwargs):
-        serializer = LoginSerializers(data=request.data, context={'request': request})
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
-        update_last_login(None, user)
-        token, created = Token.objects.get_or_create(user=user)
-        return Response({"status": status.HTTP_200_OK, "Token": token.key})
+    permission_classes = [AllowAny]
+
+    def post(self, request, format=None):
+        serializer = LoginSerializers(data=request.data, context={ 'request': self.request })
+        # serializer.is_valid(raise_exception=True)
+
+        if serializer.is_valid():
+            # print(serializer.validated_data)
+            user = serializer.validated_data['user']
+            print(user)
+            login(request, user)
+            return Response(None, status=status.HTTP_202_ACCEPTED)
+
+            # if user:
+            #     token, created = Token.objects.get_or_create(user=user)
+            #     return Response({'token': token.key}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# Method to list a particular user
+# Method to list/edit a particular user
 class SingleUserView(APIView):
     permission_classes = [AllowAny]
 
     def get_object(self, pk):
         try:
-            return RegisterUser.objects.get(
-                id=pk)  # as our model does not have a specified id as a primary key hence pk=pk with id=pk
+            return RegisterUser.objects.get(id=pk)  # as our model does not have a specified id as a primary key hence pk=pk with id=pk
         except RegisterUser.DoesNotExist:
             raise Http404
 
@@ -59,28 +68,15 @@ class SingleUserView(APIView):
             user = self.get_object(pk)
             # print(user)
             serializer = RegisterUserSerializer(user)
-            return Response({
-                'response': serializer.data,
-            }, status=status.HTTP_200_OK)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request, pk=None, format=None):
+        if pk:
+            user = self.get_object(pk)
+            serializer = RegisterUserSerializer(user)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# Method to edit details of a particular user
-
-class EditProfileView(APIView):
-    """"API endpoint for Patient profile update"""
-
-    permission_classes = [AllowAny]
-
-    def put(self, request, format=None):
-        user = request.data
-        profile = RegisterUser.objects.filter(user_email=user['user_email']).get()
-        profileSerializer = ProfileSerializer(
-            instance=profile, data=request.data.get('profile_data'), partial=True)
-        if profileSerializer.is_valid():
-            profileSerializer.save()
-            return Response({
-                'profile_data': profileSerializer.data
-            }, status=status.HTTP_200_OK)
-        return Response({
-            'profile_data': profileSerializer.errors
-        }, status=status.HTTP_400_BAD_REQUEST)

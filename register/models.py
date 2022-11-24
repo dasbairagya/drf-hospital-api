@@ -1,5 +1,4 @@
 import uuid
-
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 # from django.utils.translation import ugettext_lazy as _  
@@ -42,7 +41,7 @@ class RegisterUser(AbstractBaseUser, PermissionsMixin):
     # id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     user_name = models.CharField(max_length=150)
     user_email = models.EmailField(max_length=255, unique=True)
-    user_dob = models.DateField()
+    user_dob = models.DateField(null = True)
     location = models.CharField(max_length=50)
     user_mobile = models.CharField(max_length=50)
     is_staff = models.BooleanField(default=False)

@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate
 from rest_framework import serializers
 from .models import RegisterUser
 
@@ -5,14 +6,12 @@ from .models import RegisterUser
 class RegisterUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = RegisterUser
-        fields = '__all__'
+        # fields = '__all__'
+        fields = ["user_name", "user_email", "password","user_dob","location", "user_mobile"]
 
     def create(self, validated_data):
         user = RegisterUser.objects.create_user(**validated_data)
         return user
-
-# fields = ("user_name", "user_email", "password","user_dob","location", "user_mobile")
-
 
 
 #Write the serializer for Signin
@@ -20,20 +19,22 @@ class RegisterUserSerializer(serializers.ModelSerializer):
 class LoginSerializers(serializers.Serializer):
     user_email = serializers.CharField(max_length=255)
     password = serializers.CharField(
-        trim_whitespace=False,
         max_length=128,
         write_only=True
     )
 
     def validate(self, data):
-        user_email = data.get('email')
+        # print(data)
+        user_email = data.get('user_email')
         password = data.get('password')
-
+        print()
+        print(user_email)
+        print(password)
         if user_email and password:
-            user = authenticate(request=self.context.get('request'),
-                                user_email=user_email, password=password)
+            user = authenticate(request=self.context.get('request'), user_email=user_email, password=password)
+            print(user) #print email id of the user
             if not user:
-                msg = 'Unable to log in with provided credentials.'
+                msg = 'Access denied: wrong username or password.'
                 raise serializers.ValidationError(msg, code='authorization')
         else:
             msg = 'Must include "username" and "password".'
@@ -42,7 +43,9 @@ class LoginSerializers(serializers.Serializer):
         data['user'] = user
         return data
 
-# fields = ("user_email", "password")
+    class Meta:
+        model = RegisterUser
+        fields = ["user_email", "password"]
 
 
 class ProfileSerializer(serializers.Serializer):

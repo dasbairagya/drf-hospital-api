@@ -3,6 +3,7 @@ from django.test import TestCase
 # Create your tests here.
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
+
 from .views import RegisterCreateView, SingleUserView
 from .models import RegisterUser
 
@@ -28,19 +29,30 @@ class RegisterView(TestCase):
 
         response2 = self.client.get('/viewprofile/1')
 
+
         self.assertEqual(response2.status_code, 200)
 
         self.assertEqual(response1.status_code, 201)
 
+
     def test_signinUser(self):
+
         response = self.client.post('/signin/', {'user_email': 'email3@test.com', 'password': 'password3'})
+        # response = self.client.get('/register/')
+        # response = self.client.get('/viewprofile/1')
+
+        # @debug
+        response_content = response.content.decode("utf-8")
+        print(response_content) #..{"non_field_errors":["Unable to log in with provided credentials."]}
 
         self.assertEqual(response.status_code, 200)
 
     def test_viewProfile(self):
+
         response = self.client.get('/viewprofile/1')
 
         response_content = response.content.decode("utf-8")
+        # print(response_content)
 
         self.assertJSONEqual(
             response_content,
@@ -57,6 +69,7 @@ class RegisterView(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_editUser(self):
+
         response = self.client.get('/editprofile/1')
 
         self.assertEqual(response.status_code, 200)
