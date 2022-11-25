@@ -27,12 +27,12 @@ class LoginSerializers(serializers.Serializer):
         # print(data)
         user_email = data.get('user_email')
         password = data.get('password')
-        print()
-        print(user_email)
-        print(password)
+        # print()
+        # print(user_email)
+        # print(password)
         if user_email and password:
             user = authenticate(request=self.context.get('request'), user_email=user_email, password=password)
-            print(user) #print email id of the user
+            # print(user) #print email id of the user
             if not user:
                 msg = 'Access denied: wrong username or password.'
                 raise serializers.ValidationError(msg, code='authorization')

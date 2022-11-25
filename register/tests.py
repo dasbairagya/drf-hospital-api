@@ -36,10 +36,19 @@ class RegisterView(TestCase):
 
 
     def test_signinUser(self):
+        # @debug
+        # response2 = self.client.get('/register/')
+        # response_content = response2.content.decode("utf-8")
+        # print(response_content)
+        # o/p => [{"user_name":"username3","user_email":"email3@test.com","passw
+        # ord":"password3","user_dob":"1996-10-11","location":"location3","
+        # user_mobile":"9874563210"}]
 
-        response = self.client.post('/signin/', {'user_email': 'email3@test.com', 'password': 'password3'})
-        # response = self.client.get('/register/')
-        # response = self.client.get('/viewprofile/1')
+        response = self.client.post('/signin/', {'user_email': 'email3@test.com', 'password': 'password3'})        # response = self.client.get('/register/')
+#         response = self.client.get('/viewprofile/1') #o/p-> {"user_name":"username3","user_email":"email3@test.com","passwo
+# rd":"password3","user_dob":"1996-10-11","location":"location3","u
+# ser_mobile":"9874563210"}
+
 
         # @debug
         response_content = response.content.decode("utf-8")
