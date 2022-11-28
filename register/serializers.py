@@ -1,17 +1,22 @@
 from django.contrib.auth import authenticate
 from rest_framework import serializers
+from rest_framework.generics import get_object_or_404
+
 from .models import RegisterUser
 
 #Write the serializer for Registering the user
 class RegisterUserSerializer(serializers.ModelSerializer):
+    # password=serializers.SerializerMethodField('hash_password')
     class Meta:
         model = RegisterUser
         # fields = '__all__'
-        fields = ["user_name", "user_email", "password","user_dob","location", "user_mobile"]
+        fields = ["user_name", "user_email", "password","user_dob", "location", "user_mobile"]
 
     def create(self, validated_data):
         user = RegisterUser.objects.create_user(**validated_data)
         return user
+    # def hash_password(self,instance):
+    #     password=instance['password']
 
 
 #Write the serializer for Signin
@@ -27,18 +32,20 @@ class LoginSerializers(serializers.Serializer):
         # print(data)
         user_email = data.get('user_email')
         password = data.get('password')
-        # print()
-        # print(user_email)
-        # print(password)
         if user_email and password:
-            user = authenticate(request=self.context.get('request'), user_email=user_email, password=password)
-            # print(user) #print email id of the user
+
+            # user = authenticate(request=self.context.get('request'), user_email=user_email, password=password) #used for hash logic
+            user = get_object_or_404(RegisterUser, user_email=user_email, password=password)
+            # print('LoginSerializers user=> ', user.get('user_email')) #print email id of the user
             if not user:
                 msg = 'Access denied: wrong username or password.'
                 raise serializers.ValidationError(msg, code='authorization')
         else:
             msg = 'Must include "username" and "password".'
             raise serializers.ValidationError(msg, code='authorization')
+
+        # user_id = user.get('email').value()
+        # print('id +>' , user_id)
 
         data['user'] = user
         return data

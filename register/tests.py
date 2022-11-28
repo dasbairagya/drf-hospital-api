@@ -13,7 +13,8 @@ class RegisterView(TestCase):
     def setUp(self):
         self.client = Client()
 
-        RegisterUser.objects.create(user_name='username3',
+        RegisterUser.objects.create(
+                                    user_name='username3',
                                     user_email='email3@test.com',
                                     password='password3',
                                     user_dob='1996-10-11',
@@ -44,15 +45,16 @@ class RegisterView(TestCase):
         # ord":"password3","user_dob":"1996-10-11","location":"location3","
         # user_mobile":"9874563210"}]
 
-        response = self.client.post('/signin/', {'user_email': 'email3@test.com', 'password': 'password3'})        # response = self.client.get('/register/')
-#         response = self.client.get('/viewprofile/1') #o/p-> {"user_name":"username3","user_email":"email3@test.com","passwo
-# rd":"password3","user_dob":"1996-10-11","location":"location3","u
-# ser_mobile":"9874563210"}
+        response = self.client.post('/signin/', {'user_email': 'email3@test.com', 'password': 'password3'})
+        # response = self.client.get('/register/')
+        # response = self.client.get('/viewprofile/1') #o/p-> {"user_name":"username3","user_email":"email3@test.com","passwo
+        # rd":"password3","user_dob":"1996-10-11","location":"location3","u
+        # ser_mobile":"9874563210"}
 
 
         # @debug
-        response_content = response.content.decode("utf-8")
-        print(response_content) #..{"non_field_errors":["Unable to log in with provided credentials."]}
+        # response_content = response.content.decode("utf-8")
+        # print(response_content) #..{"non_field_errors":["Unable to log in with provided credentials."]}
 
         self.assertEqual(response.status_code, 200)
 

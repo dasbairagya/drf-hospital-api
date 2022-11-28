@@ -12,19 +12,26 @@ class UserManager(BaseUserManager):
 
     use_in_migrations = True
 
-    def create_user(self, user_email, password, **extra_fields):
-
+    def create_user(self, user_email, password=None, **extra_fields):
         if not user_email:
             raise ValueError('The Email must be set')
         user_email = self.normalize_email(user_email)
-        user = self.model(user_email=user_email, **extra_fields)
-        print('model user =>', user) #=> model user => email4@test.com
+        user = self.model(user_email=user_email, password=password, **extra_fields) #@todo: remove password arg if you want hashing to be applied
+        # print('model user =>', user) #=> model user => email4@test.com
 
-        user.set_password(password)
+        # user.set_password(password) #@todo: comment out this  if you want hashing to be applied
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, user_email, password, **extra_fields):
+    def create(self,**validated_data):
+
+        user_email=validated_data.pop("user_email")
+        password=validated_data.pop("password")
+        # print(f"=======================================================")
+        return self.create_user(user_email, password, **validated_data)
+
+
+    def create_superuser(self, user_email, password=None, **extra_fields):
 
         # print(f"{user_email=} {password=} {extra_fields=}")
         extra_fields.setdefault('is_superuser', True)

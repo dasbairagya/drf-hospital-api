@@ -43,13 +43,12 @@ class LoginView(APIView):
         if serializer.is_valid():
             # print(serializer.validated_data)
             user = serializer.validated_data['user']
-            print(user)
-            login(request, user)
-            return Response(None, status=status.HTTP_202_ACCEPTED)
+            # print('login view => ',user)
+            #return Response(None, status=status.HTTP_202_ACCEPTED)
 
-            # if user:
-            #     token, created = Token.objects.get_or_create(user=user)
-            #     return Response({'token': token.key}, status=status.HTTP_200_OK)
+            if user:
+                token, created = Token.objects.get_or_create(user=user)
+                return Response({'token': token.key}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
