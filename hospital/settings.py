@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     # 'appointments',
-    # 'patients',
+    'patients',
     'register',
     'drf_spectacular',
     'drf_spectacular_sidecar',  # required for Django collectstatic discovery

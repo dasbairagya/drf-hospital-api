@@ -13,7 +13,7 @@ urlpatterns = [
     # Base urls for endpoints
     path('admin/', admin.site.urls),
     # path('appointment/', include('appointments.urls')),
-    # path('patients/', include('patients.urls')),
+    path('patients/', include('patients.urls')),
     path('', include('register.urls')),
 
     # Auth token

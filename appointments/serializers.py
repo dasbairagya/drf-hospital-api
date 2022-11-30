@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from appointments.models import Appointment
-from patients.models import Patient
+from patients.models import Register
 
 
 class AppointmentSerializer(serializers.Serializer):
@@ -27,7 +27,7 @@ class AppointmentSerializer(serializers.Serializer):
     ]
 
     id = serializers.IntegerField(read_only=True)
-    patient = serializers.PrimaryKeyRelatedField(queryset=Patient.objects.all(), required=False)
+    patient = serializers.PrimaryKeyRelatedField(queryset=Register.objects.all(), required=False)
     disease = serializers.CharField(max_length=50)
     date = serializers.DateField(label="Appointment date",)
     timings = serializers.ChoiceField(label="Appointement time", choices=TIMESLOT_LIST)

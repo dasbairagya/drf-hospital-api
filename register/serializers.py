@@ -4,13 +4,14 @@ from rest_framework.generics import get_object_or_404
 
 from .models import RegisterUser
 
-#Write the serializer for Registering the user
+
+# Write the serializer for Registering the user
 class RegisterUserSerializer(serializers.ModelSerializer):
     # password=serializers.SerializerMethodField('hash_password')
     class Meta:
         model = RegisterUser
         # fields = '__all__'
-        fields = ["user_name", "user_email", "password","user_dob", "location", "user_mobile"]
+        fields = ["user_name", "user_email", "password", "user_dob", "location", "user_mobile"]
 
     def create(self, validated_data):
         user = RegisterUser.objects.create_user(**validated_data)
@@ -19,7 +20,7 @@ class RegisterUserSerializer(serializers.ModelSerializer):
     #     password=instance['password']
 
 
-#Write the serializer for Signin
+# Write the serializer for Signin
 
 class LoginSerializers(serializers.Serializer):
     user_email = serializers.CharField(max_length=255)
@@ -56,7 +57,6 @@ class LoginSerializers(serializers.Serializer):
 
 
 class ProfileSerializer(serializers.Serializer):
-
     user_dob = serializers.DateTimeField()
     location = serializers.CharField(max_length=50)
     user_mobile = serializers.CharField(max_length=50)
