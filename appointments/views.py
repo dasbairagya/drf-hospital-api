@@ -5,12 +5,22 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 
-from appointments.models import Appointment
+from appointments.models import BookAppointments
 from appointments.serializers import AppointmentSerializer
 
 # Create your views here.
 """API endpoint for getting info of all/particular appointment,
  update/delete appointment - only accessible by Admin"""
+class RegisterCreateView(APIView):
+    pass
+class EditUserView(APIView):
+    pass
+class ListUserView(APIView):
+    pass
+class DeleteUserView(APIView):
+    pass
+class SingleUserView(APIView):
+    pass
 
 class RegisterAppointmentView(APIView):
     """API endpoint for getting info of all/particular appointment"""
@@ -33,12 +43,12 @@ class ListAppointentView(APIView):
     permission_classes = [AllowAny]
     def get_object(self, pk):
         try:
-            return Appointment.objects.get(pk=pk)
-        except Appointment.DoesNotExist:
+            return BookAppointments.objects.get(pk=pk)
+        except BookAppointments.DoesNotExist:
             raise Http404
 
     def get(self, request, pk=None, format=None):
-        all_appointment = Appointment.objects.filter()
+        all_appointment = BookAppointments.objects.filter()
         serializer = AppointmentSerializer(all_appointment, many=True)
         return Response({'appointments': serializer.data}, status=status.HTTP_200_OK)
 
@@ -50,8 +60,8 @@ class EditAppointmentView(APIView):
 
     def get_object(self, pk):
         try:
-            return Appointment.objects.get(pk=pk)
-        except Appointment.DoesNotExist:
+            return BookAppointments.objects.get(pk=pk)
+        except BookAppointments.DoesNotExist:
             raise Http404
 
     def put(self, request, pk):
@@ -73,16 +83,16 @@ class AppointmentView(APIView):
 
     def get_object(self, pk):
         try:
-            return Appointment.objects.get(pk=pk)
-        except Appointment.DoesNotExist:
+            return BookAppointments.objects.get(pk=pk)
+        except BookAppointments.DoesNotExist:
             raise Http404
 
     def get(self, request, pk=None, format=None):
         appointment_detail = self.get_object(pk)
         serializer = AppointmentSerializer(appointment_detail)
         if pk:
-            return Response({'appointments': serializer.data}, status=status.HTTP_200_OK)
-        return Response({'appointments': serializer.data}, status=status.HTTP_200_OK)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 
@@ -92,8 +102,8 @@ class DeleteAppointView(APIView):
 
     def get_object(self, pk):
         try:
-            return Appointment.objects.get(pk=pk)
-        except Appointment.DoesNotExist:
+            return BookAppointments.objects.get(pk=pk)
+        except BookAppointments.DoesNotExist:
             raise Http404
 
     def delete(self, request, pk):

@@ -26,9 +26,9 @@ class Register(models.Model):
     def get_name(self):
         return self.user_name
 
-    @property
-    def get_id(self):
-        return self.id
+    # @property
+    # def get_id(self):
+    #     return self.id
 
     def __str__(self):
         return self.user_email

@@ -4,6 +4,8 @@ from rest_framework.views import APIView
 
 # from appointments.models import Appointment
 # from appointments.serializers import AppointmentSerializer
+from appointments.models import BookAppointments
+from appointments.serializers import AppointmentSerializer
 from patients.models import Register
 from register.models import RegisterUser
 from rest_framework.response import Response
@@ -42,11 +44,11 @@ class EditUserView(APIView):
             # print(patient)
             serializer = PatientProfileSerializer(patient)
             # @todo
-            # appointment = Appointment.objects.filter( patient=patient)
+            appointment = BookAppointments.objects.filter( patients=patient)
             # print(appointment)
-            # appointmentSerializer = AppointmentSerializer(appointment, many=True)
+            appointmentSerializer = AppointmentSerializer(appointment, many=True)
 
-            return Response(serializer.data, status=status.HTTP_200_OK) #view single patient
+            return Response({'patient':serializer.data, 'bookappointments': appointmentSerializer.data}, status=status.HTTP_200_OK) #view single patient
             # return Response({'patient_data': serializer.data}, {'bookappointments': appointmentSerializer.data}, status=status.HTTP_200_OK) #view single patient
 
         #list all the patients
