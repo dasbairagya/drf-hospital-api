@@ -42,17 +42,23 @@ class AppointmentsView(TestCase):
     def test_viewSingleapppointment(self):
 
         response = self.client.get('/appointment/view/1')
-        print('response', response)
+        # response_content = response.content.decode("utf-8")
+        # print('View appointment => ', response_content)
 
-        # self.assertEqual(response.status_code, 200)
+
+        self.assertEqual(response.status_code, 200)
 
     def test_editAppointment(self):
         response = self.client.get('/appointment/edit/1')
+        # response_content = response.content.decode("utf-8")
+        # print('Edit appointment => ',response_content)
 
         self.assertEqual(response.status_code, 200)
 
     def test_deleteAppointment(self):
         response = self.client.delete('/appointment/delete/1')
+
+        response_content = response.content.decode("utf-8")
 
         self.assertEqual(response.status_code, 204)
 

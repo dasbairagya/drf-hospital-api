@@ -35,6 +35,7 @@ class AppointmentSerializer(serializers.Serializer):
     description = serializers.CharField(max_length=100)
 
     def create(self, validated_data):
+
         new_appointment = BookAppointments.objects.create(
             patients=validated_data['patients'],
             disease=validated_data['disease'],
@@ -45,7 +46,8 @@ class AppointmentSerializer(serializers.Serializer):
         return new_appointment
 
     def update(self, instance, validated_data):
-        instance.patients = validated_data.get('patients_id', instance.patient)
+        print(validated_data)
+        instance.patients = validated_data.get('patients', instance.patients)
         instance.disease = validated_data.get('disease', instance.disease)
         instance.date = validated_data.get('date', instance.date)
         instance.timings = validated_data.get('timings', instance.timings)

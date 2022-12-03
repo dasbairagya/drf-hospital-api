@@ -11,16 +11,27 @@ from appointments.serializers import AppointmentSerializer
 # Create your views here.
 """API endpoint for getting info of all/particular appointment,
  update/delete appointment - only accessible by Admin"""
+
+
 class RegisterCreateView(APIView):
     pass
+
+
 class EditUserView(APIView):
     pass
+
+
 class ListUserView(APIView):
     pass
+
+
 class DeleteUserView(APIView):
     pass
+
+
 class SingleUserView(APIView):
     pass
+
 
 class RegisterAppointmentView(APIView):
     """API endpoint for getting info of all/particular appointment"""
@@ -41,6 +52,7 @@ class RegisterAppointmentView(APIView):
 class ListAppointentView(APIView):
     """API endpoint for getting info of all appointments"""
     permission_classes = [AllowAny]
+
     def get_object(self, pk):
         try:
             return BookAppointments.objects.get(pk=pk)
@@ -53,7 +65,6 @@ class ListAppointentView(APIView):
         return Response({'appointments': serializer.data}, status=status.HTTP_200_OK)
 
 
-
 class EditAppointmentView(APIView):
     """API endpoint for edit info of a particular appointment"""
     permission_classes = [AllowAny]
@@ -64,17 +75,22 @@ class EditAppointmentView(APIView):
         except BookAppointments.DoesNotExist:
             raise Http404
 
+    def get(self, request, pk=None, format=None):
+        appointment_detail = self.get_object(pk)
+        serializer = AppointmentSerializer(appointment_detail)
+        if pk:
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
     def put(self, request, pk):
-        saved_appointment= self.get_object(pk)
-        serializer = AppointmentSerializer(
-            instance=saved_appointment, data=request.data.get('appointment'), partial=True) #if want to pass only single json data then pass data=request.data only
+        saved_appointment = self.get_object(pk)
+        serializer = AppointmentSerializer(instance=saved_appointment, data=request.data.get('appointment'), partial=True)  # if want to pass only single json data then pass data=request.data only
         if serializer.is_valid():
             serializer.save()
             return Response({'appointment': serializer.data}, status=status.HTTP_200_OK)
         return Response({
             'appointments': serializer.errors
         }, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 class AppointmentView(APIView):
@@ -95,7 +111,6 @@ class AppointmentView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-
 class DeleteAppointView(APIView):
     """API endpoint for delete particular appointment"""
     permission_classes = [AllowAny]
@@ -107,6 +122,9 @@ class DeleteAppointView(APIView):
             raise Http404
 
     def delete(self, request, pk):
-        saved_appointment= self.get_object(pk)
+        # print(pk)
+        saved_appointment = self.get_object(pk)
+        print(saved_appointment)
         saved_appointment.delete()
-        return Response({"message": "Appointment with id `{}` has been deleted.".format(pk)}, status=status.HTTP_204_NO_CONTENT)
+        return Response({"message": "Appointment with id `{}` has been deleted.".format(pk)},
+                        status=status.HTTP_204_NO_CONTENT)

@@ -3,8 +3,8 @@ from .views import RegisterAppointmentView, EditAppointmentView, ListAppointentV
 
 urlpatterns = [
     path('register/', RegisterAppointmentView.as_view(), name='register_appointment'),
-    path('edit/<int:pk>/', EditAppointmentView.as_view(), name='index'),
-    path('list/', ListAppointentView.as_view(), name='index'),
-    path('delete/<int:pk>/', DeleteAppointView.as_view(), name='index'),
-    path('view/<int:pk>/', AppointmentView.as_view(), name='index'),
+    path('edit/<int:pk>', EditAppointmentView.as_view(), name='edit_appointment'),
+    path('list/', ListAppointentView.as_view(), name='list_appointment'),
+    path('delete/<int:pk>/', DeleteAppointView.as_view(), name='delete_appointment'), # note ending slash should could cause test failure
+    path('view/<int:pk>', AppointmentView.as_view(), name='view_appointment'),
 ]
