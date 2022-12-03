@@ -7,9 +7,9 @@ This is an appointment booking API's based on Django REST Framework. This API ha
 
 # Endpoints
 
-![](./endpoints.png)
-![](./endpoints1.png)
-![](./endpoints2.png)
+![](endpoints.png)
+![](endpoints1.png)
+![](endpoints2.png)
 
 #### Register Endpoints: 'register/'
 ```
