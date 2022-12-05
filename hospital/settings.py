@@ -160,6 +160,11 @@ USE_TZ = False
 
 STATIC_URL = 'static/'
 
+CORS_ORIGIN_ALLOW_ALL = True
+
+TEST_RUNNER = 'xmlrunner.extra.djangotestrunner.XMLTestRunner'
+TEST_OUTPUT_FILE_NAME = 'unit.xml'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
