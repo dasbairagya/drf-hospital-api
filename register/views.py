@@ -17,12 +17,9 @@ class RegisterCreateView(generics.CreateAPIView):
     queryset = RegisterUser.objects.all()
 
     def create(self, request, *args, **kwargs):
-        # request.data['author'] = request.user.pk
-        serializer = self.serializer_class(data=request.data)
+        serializer = self.serializer_class(data=request.data, context={ 'request': self.request })
         serializer.is_valid(raise_exception=True)
         if self.check_details(request.data):
-            # super().create(request, *args, **kwargs)
-            # self.perform_create(serializer)
             serializer.save()
             return Response(data={"message": "User created successfully."}, status=status.HTTP_201_CREATED)
 
@@ -38,10 +35,13 @@ class RegisterCreateView(generics.CreateAPIView):
 class SigninRetrieveView(generics.CreateAPIView):
     serializer_class = SigninSerializer
 
-    def create(self, request, *args, **kwargs): #@todo
+    def create(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            user = serializer.validated_data['user']
+            if user:
+                token, created = Token.objects.get_or_create(user=user)
+                return Response({'token': token.key}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -49,11 +49,11 @@ class SigninRetrieveView(generics.CreateAPIView):
 class SingleUserView(generics.RetrieveAPIView):
     serializer_class = RegisterSerializer
     queryset = RegisterUser.objects.all()
-
-    def get(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
-        return Response(serializer.data)
+    #
+    # def get(self, request, *args, **kwargs):
+    #     instance = self.get_object()
+    #     serializer = self.get_serializer(instance)
+    #     return Response(serializer.data)
 
 
 # Method to edit details of a particular user

@@ -5,6 +5,7 @@ from .models import Register
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Register
+        fields = '__all__'
 
 
 class ViewSerializer(serializers.ModelSerializer):
@@ -12,3 +13,4 @@ class ViewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Register
+        fields = '__all__'
