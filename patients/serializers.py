@@ -13,4 +13,4 @@ class ViewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Register
-        fields = '__all__'
+        fields = ["id", "user_name", "user_email", "user_dob", "location", "user_mobile", "bookappointments"]

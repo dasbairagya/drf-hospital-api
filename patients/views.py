@@ -35,12 +35,12 @@ class EditUserView(generics.RetrieveUpdateAPIView):
 
 # Method to list all the patients
 class ListUserView(generics.ListAPIView):
-    serializer_class = RegisterSerializer
+    serializer_class = ViewSerializer
     queryset = Register.objects.all()
 
 
 class SingleUserView(generics.RetrieveAPIView):
-    serializer_class = RegisterSerializer
+    serializer_class = ViewSerializer
     queryset = Register.objects.all()
 
     # def get(self, request, *args, **kwargs):
