@@ -12,8 +12,9 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 urlpatterns = [
     # Base urls for endpoints
     path('admin/', admin.site.urls),
-    path('appointment/', include('appointments.urls')),
-    path('patients/', include('patients.urls')),
+    # path('', include('appointments.urls')),
+
+    path('', include('patients.urls')),
     path('', include('register.urls')),
 
     # Auth token

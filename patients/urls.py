@@ -1,13 +1,12 @@
+from django.contrib import admin
+from .views import RegisterCreateView, EditUserView, ListUserView, SingleUserView, DeleteUserView
 from django.urls import path, include
-from .views import RegisterCreateView, EditUserView
 
 urlpatterns = [
-    path('register/', RegisterCreateView.as_view(), name='patient_registration'),
-    path('edit/<int:pk>', EditUserView.as_view(), name='patient_edit'),
-    path('list/', EditUserView.as_view(), name='patient_list'),
-    # path('view/<int:pk>', AppointmentViewPatient.as_view(), name='patient_view'),
-    path('view/<int:pk>', EditUserView.as_view(), name='patient_view'),
-    path('delete/<int:pk>', EditUserView.as_view(), name='patient_delete'),
-]
+    path('patients/register/', RegisterCreateView.as_view(), name='patient_registration'),
+    path('patients/edit/<int:pk>', EditUserView.as_view(), name='patient_edit'),
+    path('patients/list/', ListUserView.as_view(), name='patient_list'),
+    path('patients/view/<int:pk>', SingleUserView.as_view(), name='patient_view'),
+    path('patients/delete/<int:pk>', DeleteUserView.as_view(), name='patient_delete'),
+  ]
 
-# 8367823626

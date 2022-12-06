@@ -1,81 +1,65 @@
-from django.contrib.auth import login, authenticate
-from django.contrib.auth.models import update_last_login
-from django.http import Http404
-from rest_framework import status, generics
+from django.shortcuts import render
+from rest_framework import generics
 from rest_framework.response import Response
-from rest_framework.views import APIView
-from .serializers import ProfileSerializer, RegisterUserSerializer, LoginSerializers
-from .models import RegisterUser
-from rest_framework.permissions import AllowAny
+from .serializers import RegisterSerializer, SigninSerializer
 from rest_framework.authtoken.models import Token
-
-
-# https://python.plainenglish.io/django-custom-user-model-and-auth-using-jwt-simple-boilerplate-6acd78bf7767
-# Create your views here.
-from .util import get_tokens_for_user
+import jwt
+import datetime
+from django.conf import settings
+from django.core import serializers
+from rest_framework import status
+from .models import RegisterUser
 
 
 # Method to register a new user
-class RegisterCreateView(APIView):
-    permission_classes = [AllowAny]
+class RegisterCreateView(generics.CreateAPIView):
+    serializer_class = RegisterSerializer
+    queryset = RegisterUser.objects.all()
 
-    def post(self, request):
-        serializer = RegisterUserSerializer(data=request.data)
-        if serializer.is_valid():
+    def create(self, request, *args, **kwargs):
+        # request.data['author'] = request.user.pk
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        if self.check_details(request.data):
+            # super().create(request, *args, **kwargs)
+            # self.perform_create(serializer)
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(data={"message": "User created successfully."}, status=status.HTTP_201_CREATED)
 
-    def get(self, request):
-        users = RegisterUser.objects.all()
-        serializer = RegisterUserSerializer(users, many=True)
-        return Response(serializer.data)
+            # return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(data={"message": "Password or username policy failed."}, status=status.HTTP_400_BAD_REQUEST)
+
+    @staticmethod
+    def check_details(data):
+        return len(data['user_name']) < 11 and len(data['password']) < 10
 
 
 # Method to check login credentials
-class LoginView(APIView):
-    permission_classes = [AllowAny]
+class SigninRetrieveView(generics.CreateAPIView):
+    serializer_class = SigninSerializer
 
-    def post(self, request, format=None):
-        serializer = LoginSerializers(data=request.data, context={ 'request': self.request })
-        # serializer.is_valid(raise_exception=True)
-
-        if serializer.is_valid():
-            # print(serializer.validated_data)
-            user = serializer.validated_data['user']
-            # print('login view => ',user)
-            #return Response(None, status=status.HTTP_202_ACCEPTED)
-
-            if user:
-                token, created = Token.objects.get_or_create(user=user)
-                return Response({'token': token.key}, status=status.HTTP_200_OK)
+    def create(self, request, *args, **kwargs): #@todo
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# Method to list/edit a particular user
-class SingleUserView(APIView):
-    permission_classes = [AllowAny]
+# Method to list a particular user
+class SingleUserView(generics.RetrieveAPIView):
+    serializer_class = RegisterSerializer
+    queryset = RegisterUser.objects.all()
 
-    def get_object(self, pk):
-        try:
-            return RegisterUser.objects.get(id=pk)  # as our model does not have a specified id as a primary key hence pk=pk with id=pk
-        except RegisterUser.DoesNotExist:
-            raise Http404
-
-    def get(self, request, pk=None, format=None):
-        if pk:
-            user = self.get_object(pk)
-            # print(user)
-            serializer = RegisterUserSerializer(user)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def put(self, request, pk=None, format=None):
-        if pk:
-            user = self.get_object(pk)
-            serializer = RegisterUserSerializer(user)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
 
 
+# Method to edit details of a particular user
+class EditUserView(generics.RetrieveUpdateAPIView):
+    serializer_class = RegisterSerializer
+    queryset = RegisterUser.objects.all()
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
