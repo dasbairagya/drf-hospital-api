@@ -39,9 +39,10 @@ class SigninRetrieveView(generics.CreateAPIView):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid(raise_exception=True):
             user = serializer.validated_data['user']
+            # print(user)
             if user:
                 token, created = Token.objects.get_or_create(user=user)
-                return Response({'token': token.key}, status=status.HTTP_200_OK)
+                return Response({'token': token.key, 'id': token.user_id, 'email': user.user_email,}, status=status.HTTP_200_OK) # id is require to fetch the profile data from ui by id as logied in user
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
